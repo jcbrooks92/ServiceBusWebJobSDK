@@ -9,7 +9,17 @@ namespace ServiceBusWebJob
 
     public class Functions
     {
-        // public static void ProcessQueueMessage([ServiceBusTrigger("topic", "sub", Connection ="SBConnection")] string message, ExecutionContext executionContext, ILogger logger)
+
+        [FunctionName("TimerTriggerCSharp")]
+        public static void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log)
+        {
+            if (myTimer.IsPastDue)
+            {
+                log.LogInformation("Timer is running late!");
+            }
+            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+        }
+
         public static void ProcessMessasge([ServiceBusTrigger(topicName: "topic", subscriptionName: "sub", Connection = "SBConnection")] string myQueueItem, string MessageId, ILogger log)
         {
             {

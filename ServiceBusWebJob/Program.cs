@@ -12,9 +12,11 @@ namespace ServiceBusWebJob
         static void Main()
         {
             var builder = new HostBuilder();
+            builder.UseEnvironment("development");
             builder.ConfigureWebJobs(b =>
             {
                 b.AddAzureStorageCoreServices();
+                b.AddTimers();
                 b.AddServiceBus(sbOptions =>
                 {
                     sbOptions.MessageHandlerOptions.AutoComplete = true;
